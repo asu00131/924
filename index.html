@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>M3U8 播放器</title>
+    <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
+</head>
+<body>
+    <h2>M3U8 播放示例</h2>
+    <video id="video-player" controls width="640" height="360"></video>
+    <script>
+        if (Hls.isSupported()) {
+            const video = document.getElementById('video-player');
+            const hls = new Hls();
+            hls.loadSource('https://radiopull.radiofoshan.com.cn/live/1400820947_BSID_42_audio.m3u8');
+            hls.attachMedia(video);
+            hls.on(Hls.Events.MANIFEST_PARSED, function () {
+                video.play();
+            });
+        } else if (video.canPlayType('application/vnd.apple.mpegurl')) {
+            video.src = 'https://radiopull.radiofoshan.com.cn/live/1400820947_BSID_42_audio.m3u8';
+            video.addEventListener('loadedmetadata', function () {
+                video.play();
+            });
+        }
+    </script>
+</body>
+</html>
